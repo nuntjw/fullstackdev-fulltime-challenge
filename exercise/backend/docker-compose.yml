@@ -1,0 +1,26 @@
+version: "2"
+services:
+    #### NodeJS Container ####
+    nodejs:
+        build: .
+        ports:
+            - "8000:8000"
+        tty: true
+        volumes:
+            - .:/usr/src/app
+        env_file: .env
+        working_dir: /usr/src/app
+        command:
+            ["/bin/sh", "-c", "yarn install --production=false && yarn dev"]
+        depends_on:
+            - mongo
+    mongo:
+        image: mongo:4.0-xenial
+        ports:
+            - "27017:27017"
+        volumes:
+            - ./data/mongo:/data/db
+networks:
+    default:
+        external:
+            name: coin_locker_network
