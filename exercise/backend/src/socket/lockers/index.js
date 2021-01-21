@@ -1,7 +1,6 @@
 import moment from "moment";
 import lockerModel from "app/models/locker";
 import EVENT from "app/constants/socket";
-import { STATUS } from "app/constants/locker";
 import { calculatePrice } from "app/helpers/lockers";
 
 const emitCurrentState = async (io) => {
@@ -25,7 +24,6 @@ const reserve = (io) => async (msg) => {
       expiredAt: now.add(msg.reserveHours, "hours").toISOString(),
       amount: calculatePrice(locker.size, msg.reserveHours),
     },
-    status: STATUS.RESERVED,
   };
   await lockerModel.update(msg.lockerId, payload);
   const lockers = await lockerModel.find();

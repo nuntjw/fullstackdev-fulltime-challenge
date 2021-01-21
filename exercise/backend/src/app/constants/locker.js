@@ -1,9 +1,3 @@
-export const STATUS = {
-  IDLE: "IDLE",
-  RESERVED: "RESERVED",
-  IN_USE: "IN_USE",
-};
-
 export const SIZE = {
   S: 'SMALL',
   M: 'MEDIUM',

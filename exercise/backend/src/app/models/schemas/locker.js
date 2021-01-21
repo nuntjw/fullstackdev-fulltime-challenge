@@ -13,10 +13,6 @@ const lockerSchema = new mongoose.Schema(
       type: String,
       enum: [SIZE.S, SIZE.M, SIZE.L],
     },
-    status: {
-      type: String,
-      enum: [STATUS.IDLE, STATUS.IN_USE, STATUS.RESERVED],
-    },
     reservation: {
       type: reservationSchema,
       default: null,
