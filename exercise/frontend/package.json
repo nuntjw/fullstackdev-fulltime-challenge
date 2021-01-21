@@ -1,6 +1,26 @@
 {
   "name": "frontend",
   "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT"
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "test": "jest"
+  },
+  "dependencies": {
+    "bootstrap": "4.5.*",
+    "bootstrap-vue": "2.21.*",
+    "core-js": "3.8.*",
+    "nuxt": "2.14.*",
+    "vue-socket.io": "^3.0.10"
+  },
+  "devDependencies": {
+    "@vue/test-utils": "1.1.*",
+    "babel-core": "7.0.0-bridge.*",
+    "babel-jest": "26.6.*",
+    "jest": "26.6.*",
+    "vue-jest": "3.0.*"
+  }
 }
