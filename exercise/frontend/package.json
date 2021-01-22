@@ -13,8 +13,9 @@
     "bootstrap": "4.5.*",
     "bootstrap-vue": "2.21.*",
     "core-js": "3.8.*",
+    "moment": "2.29.*",
     "nuxt": "2.14.*",
-    "vue-socket.io": "^3.0.10"
+    "socket.io-client": "3.1.*"
   },
   "devDependencies": {
     "@vue/test-utils": "1.1.*",
