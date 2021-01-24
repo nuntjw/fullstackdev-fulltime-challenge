@@ -1,0 +1,6 @@
+export const STATE = {
+  IDLE: 'IDLE',
+  LOADING: 'LOADING',
+  ERROR: 'ERROR',
+  COMPLETED: 'COMPLETED',
+}

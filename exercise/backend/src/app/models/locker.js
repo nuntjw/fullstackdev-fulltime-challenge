@@ -9,9 +9,12 @@ const update = (id, payload) =>
 
 const findById = (id) => lockerModel.findById(id).lean().exec();
 
+const updateMany = (query, payload) => lockerModel.updateMany(query, payload);
+
 export default {
   find,
   create,
   update,
   findById,
+  updateMany,
 };

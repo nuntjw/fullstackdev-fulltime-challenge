@@ -1,12 +1,11 @@
-import IO from 'socket.io-client'
+import IO from "socket.io-client";
 
-let io
+let io;
 
 const getClient = () => {
-  if (io) return io
-  return IO('http://10.0.0.83:8000')
-}
+  if (io) return io;
+  io = IO("http://10.0.0.113:8000");
+  return io;
+};
 
-export {
-  getClient,
-}
+export { getClient };

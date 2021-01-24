@@ -13,6 +13,7 @@ const lockerSchema = new mongoose.Schema(
       type: String,
       enum: [SIZE.S, SIZE.M, SIZE.L],
     },
+    pendingBy: String,
     reservation: {
       type: reservationSchema,
       default: null,

@@ -5,11 +5,11 @@
       <LockerCard
         v-for="locker in lockers.list"
         :key="locker._id"
-        :id="locker._id"
         :title="locker.name"
         :firstHourPrice="locker.price.firstHour"
         :afterHourPrice="locker.price.afterHour"
-        :onReserve="onReserve(locker)"
+        :onPending="onPending(locker)"
+        :pendingBy="locker.pendingBy"
         :reservation="locker.reservation"
       />
     </b-card-group>
@@ -29,7 +29,7 @@ export default {
       name: String,
       list: Array
     },
-    onReserve: Function
+    onPending: Function,
   }
 };
 </script>
