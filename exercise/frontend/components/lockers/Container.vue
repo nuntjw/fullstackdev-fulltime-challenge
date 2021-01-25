@@ -19,6 +19,12 @@
     <div v-else-if="state === STATE.ERROR">
       Error
     </div>
+    <ReserveModal
+      :modalVisible="pendingLocker !== null"
+      :onCloseModal="onCloseModal"
+      :pendingLocker="pendingLocker"
+      :onReserve="onReserve"
+    />
   </b-container>
 </template>
 
@@ -29,11 +35,13 @@ import { filterBySize } from "../../plugins/lockerHelper";
 import { STATE } from "../../constants/common";
 import { SIZE } from "../../constants/locker";
 import { EVENT } from "../../constants/socket";
+import ReserveModal from "./ReserveModal";
 
 export default {
   name: "LockersContainer",
   components: {
-    LockerGroup
+    LockerGroup,
+    ReserveModal
   },
   data() {
     return {
@@ -41,27 +49,43 @@ export default {
       mediumLockers: { name: "Medium", list: [] },
       largeLockers: { name: "Large", list: [] },
       state: "IDLE",
-      usersCount: 0
+      usersCount: 0,
+      pendingLocker: null
     };
   },
   methods: {
-    onPending: locker => e => {
+    onPending(locker) {
+      const onToggleModal = () => {
+        this.pendingLocker = locker;
+      };
+      return function(e) {
+        e.preventDefault();
+        const io = getClient();
+        io.emit(EVENT.PENDING, {
+          lockerId: locker._id
+        });
+        onToggleModal();
+      };
+    },
+    onCloseModal(e) {
       e.preventDefault();
       const io = getClient();
-      return io.emit(EVENT.PENDING, {
-        lockerId: locker._id,
-        pendingBy: "nuntjw"
+      io.emit(EVENT.CANCEL_PENDING, {
+        lockerId: this.pendingLocker._id
       });
+      this.pendingLocker = null;
     },
-    onReserve: locker => e => {
-      e.preventDefault();
+    onReserve(name, hours, money) {
       const io = getClient();
       const payload = {
-        lockerId: locker._id,
-        reservedBy: "nunt",
-        reserveHours: 3
+        lockerId: this.pendingLocker._id,
+        reservedBy: name,
+        reserveHours: hours,
+        money,
       };
+      console.log(payload)
       io.emit(EVENT.RESERVE, payload);
+      this.pendingLocker = null;
     }
   },
   computed: {

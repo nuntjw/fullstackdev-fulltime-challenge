@@ -10,9 +10,9 @@
       {{ afterHour }}
     </b-card-text>
     <b-card-text class="reserved" v-if="isReserved()">
-      <span>Reserved by {{ reservation.reservedBy }}</span>
+      <span>Reserved by {{ currentReservation.reservedBy }}</span>
       <br />
-      <Countdown :expiredAt="reservation.expiredAt" />
+      <Countdown :expiredAt="currentReservation.expiredAt" />
     </b-card-text>
     <template #footer>
       <div class="custom-card-footer">
@@ -20,7 +20,7 @@
           :disabled="(pendingBy && true) || isReserved()"
           :variant="pendingBy || isReserved() ? 'light' : 'primary'"
           @click="onPending($event)"
-          >Reserve
+          >{{ btnText }}
         </b-button>
       </div>
     </template>
@@ -44,10 +44,24 @@ export default {
     reservation: Object,
     pendingBy: String
   },
+  data() {
+    return {
+      pendingSockerId: this.pendingBy,
+      currentReservation: this.reservation
+    };
+  },
+  watch: {
+    pendingBy() {
+      this.pendingSockerId = this.pendingBy;
+    },
+    reservation() {
+      this.currentReservation = this.reservation;
+    }
+  },
   methods: {
     isReserved() {
-      return this.reservation
-        ? moment(this.reservation.expiredAt).isAfter(moment())
+      return this.currentReservation
+        ? moment(this.currentReservation.expiredAt).isAfter(moment())
         : false;
     }
   },
@@ -59,10 +73,10 @@ export default {
       return `After hour: ${this.afterHourPrice} THB`;
     },
     btnText() {
-      if (this.pendingBy) {
-        return "Pending";
-      } else if (this.isReserved()) {
+      if (this.isReserved()) {
         return "Reserved";
+      } else if (this.pendingSockerId) {
+        return "Pending";
       }
       return "Reserve";
     }

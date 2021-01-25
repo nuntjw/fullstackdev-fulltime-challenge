@@ -8,6 +8,8 @@ const reservationSchema = new mongoose.Schema(
     hours: Number,
     expiredAt: Date,
     amount: Number,
+    change: Number,
+    money: Number,
   },
   {
     _id: false,
