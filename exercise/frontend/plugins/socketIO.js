@@ -4,7 +4,7 @@ let io;
 
 const getClient = () => {
   if (io) return io;
-  io = IO("http://10.0.0.123:8000");
+  io = IO(process.env.SERVICE_URL);
   return io;
 };
 
